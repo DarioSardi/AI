@@ -7,9 +7,9 @@ def act(x):
 import numpy as np
 class Perceptron:
     
-    def __init__(self): 
+    def __init__(self,size): 
     	#prende input e inizializza in base alla sua dimensione pesi randomici
-        self.weights = [np.random.uniform(-1,1),np.random.uniform(-1,1)]
+        self.weights = np.random.rand(size,1) 
         self.lr = 0.01
     def guess(self,inputs):
         sum2=0
