@@ -5,6 +5,7 @@ Provides a simple 1 hidden layer neural network.
 Initialize it with input data size,output data size and number of nodes in the hidden layer.
 """
 import numpy as np
+import matplotlib.pyplot as plt
 
 def sigmoid(x):
     return 1.0/(1+ np.exp(-x))
@@ -27,6 +28,12 @@ class NeuralNet:
 		self.plotPointsX = []
 		self.plotPointsY1 = []
 		self.plotPointsY2 = []
+
+	def setWeights(w1,w2):
+		self.weightsI=w1
+		self.weightsO=w2
+	def getWeights():
+		return self.weightsI,self.weightsO
 
 	def ff(self):
 		# layer1 results
@@ -66,4 +73,10 @@ class NeuralNet:
 	def answer(self,input_):
 		self.input=input_
 		self.ff()
-		print(self.output)
+		#print(self.output[0])
+		return self.output
+	
+	def plotError(self):
+		plt.plot(self.plotPointsX[10:],self.plotPointsY1[10:],c='red')
+		plt.plot(self.plotPointsX[10:],self.plotPointsY2[10:],c='blue')
+		plt.show()
