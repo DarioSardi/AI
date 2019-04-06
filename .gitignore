@@ -2,3 +2,6 @@ dataset/bird.npy
 dataset/cloud.npy
 dataset/eiffel.npy
 dataset/hot-dog.npy
+*.pyc
+__pycache__/
+.vscode/
