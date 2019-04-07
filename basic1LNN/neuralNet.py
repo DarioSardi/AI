@@ -2,8 +2,13 @@
 One layer Neural Network
 =====
 Provides a simple 1 hidden layer neural network.
-Initialize it with input data size,output data size and number of nodes in the hidden layer.
+__init__(input_size,output_size,hidden_layer_size) \n
+input_size : number of parameters passed as inputs for training or guessing \n
+output_size : number of output parameters expected \n
+hidden_layer_size : number of hidden layer neurons \n
 """
+#%%
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -15,36 +20,43 @@ def sigmoidD(x):
 
 class NeuralNet:
 
-	def __init__(self, input_size, out_size,hidden_size):
+	def __init__(self, input_size,hidden_size,out_size):
 		self.input = []
 		self.iS =int(input_size)
 		self.oS =int(out_size)
 		# input weights matrice inputSize x 4 
-		self.weightsI = np.random.rand(input_size,hidden_size)	# better init?
+		self.weightsI = np.random.random(( hidden_size,input_size))	# better init?
 		# output weights matrice 4 x 1
-		self.weightsO = np.random.rand(hidden_size, 1)			# better init?
+		self.weightsO = np.random.random((out_size,hidden_size))		# better init?
 		# inizializzo array output
+		#self.bias_h = np.ones((hidden_size, 1));
+		#self.bias_o = np.ones((hidden_size, 1));
+		self.lr = 0.1
 		self.output = np.zeros(out_size)
 		self.plotPointsX = []
 		self.plotPointsY1 = []
 		self.plotPointsY2 = []
 
-	def setWeights(w1,w2):
+	def setWeights(self,w1,w2):
 		self.weightsI=w1
 		self.weightsO=w2
-	def getWeights():
-		return self.weightsI,self.weightsO
+	
+	def getWeights(self):
+		print(self.weightsI.shape[0],self.weightsI.shape[1])
+		print(self.weightsO.shape[0],self.weightsO.shape[1])
 
 	def ff(self):
 		# layer1 results
-		self.layerI = sigmoid(np.dot(self.input, self.weightsI))
+		self.layerI = sigmoid(np.dot(self.weightsI,self.input))
 		# output results
-		self.output = sigmoid(np.dot(self.layerI, self.weightsO))
+		self.output = sigmoid(np.dot(self.weightsO,self.layerI))
 
 	def backprop(self):
 		# calcolo i valori delle loss F.
-		updateI = np.dot(self.input.T,  (np.dot(2*(self.y - self.output) * sigmoidD(self.output), self.weightsO.T) * sigmoidD(self.layerI)))
-		updateO = np.dot(self.layerI.T, (2*(self.y - self.output)* sigmoidD(self.output)))
+		b=self.lr*(self.y - self.output) * sigmoidD(self.output)
+		a=np.dot( self.weightsO.T,b) * sigmoidD(self.layerI)
+		updateI = np.dot(a,self.input.T)
+		updateO = np.dot((self.lr*(self.y - self.output)* sigmoidD(self.output)),self.layerI.T)
 		
 		self.errorI=updateI
 		self.errorO=updateO
@@ -52,6 +64,33 @@ class NeuralNet:
 		self.weightsI += updateI
 		self.weightsO += updateO
 	
+	def train(self):
+		hidd = np.dot(self.input,self.weightsI)
+		#hidd += self.bias_h
+		hidd = sigmoid(hidd)
+		self.output =np.dot(hidd,self.weightsO)#+self.bias_o
+		self.output = sigmoid(self.output)
+		#output error
+		o_error = self.y - self.output
+		gradients = np.dot(o_error*sigmoidD(self.output),self.lr)
+		weight_ho_deltas=np.dot(hidd.T,gradients)
+		#adjust out weights
+		self.weightsO += weight_ho_deltas
+		#self.bias_o += gradients
+		#hidden layer error
+		hidden_errors =np.dot(self.weightsO.T,o_error)
+		hidden_gradient = np.dot(np.dot(sigmoidD(hidd),hidden_errors),self.lr)
+		weight_ih_deltas = np.dot(hidden_gradient,self.input.T)
+		self.weightsI += weight_ih_deltas + hidden_gradient
+		
+
+
+	def trainOnce(self,input_,output_):
+		self.y = output_		
+		self.input = input_
+		self.ff()
+		self.backprop()
+
 	def trainLoop(self,input_,output_,cycle):
 		#check dimens.
 		if (input_.shape[1]==self.iS and output_.shape[1]==self.oS):
@@ -73,7 +112,7 @@ class NeuralNet:
 	def answer(self,input_):
 		self.input=input_
 		self.ff()
-		#print(self.output[0])
+		print(self.output)
 		return self.output
 	
 	def plotError(self):
