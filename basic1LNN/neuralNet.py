@@ -13,11 +13,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def sigmoid(x):
-    return 1.0/(1+ np.exp(-x))
+	ans= 1.0/(1+ np.exp(-x))
+	return ans
 
 def sigmoidD(x):
-		return x * (1.0 - x)
-
+	ans= x * (1.0 - x)
+	return ans
 class NeuralNet:
 
 	def __init__(self, input_size,hidden_size,out_size):
@@ -25,12 +26,12 @@ class NeuralNet:
 		self.iS =int(input_size)
 		self.oS =int(out_size)
 		# input weights matrice inputSize x 4 
-		self.weightsI = np.random.random(( hidden_size,input_size))	# better init?
+		self.weightsI = np.random.random(( hidden_size,input_size))*2-1		# better init?
 		# output weights matrice 4 x 1
-		self.weightsO = np.random.random((out_size,hidden_size))		# better init?
+		self.weightsO = np.random.random((out_size,hidden_size))*2-1		# better init?
 		# inizializzo array output
-		#self.bias_h = np.ones((hidden_size, 1));
-		#self.bias_o = np.ones((hidden_size, 1));
+		self.bias_h =np.random.random((hidden_size,1))*2-1
+		self.bias_o = np.random.random((out_size,1))*2-1
 		self.lr = 0.1
 		self.output = np.zeros(out_size)
 		self.plotPointsX = []
@@ -47,43 +48,22 @@ class NeuralNet:
 
 	def ff(self):
 		# layer1 results
-		self.layerI = sigmoid(np.dot(self.weightsI,self.input))
+		#print(self.weightsI.shape,self.input.shape)
+		self.hidden = sigmoid(np.dot(self.weightsI,self.input)+self.bias_h)
 		# output results
-		self.output = sigmoid(np.dot(self.weightsO,self.layerI))
+		self.output = sigmoid(np.dot(self.weightsO,self.hidden)+self.bias_o)
+
 
 	def backprop(self):
-		# calcolo i valori delle loss F.
-		b=self.lr*(self.y - self.output) * sigmoidD(self.output)
-		a=np.dot( self.weightsO.T,b) * sigmoidD(self.layerI)
-		updateI = np.dot(a,self.input.T)
-		updateO = np.dot((self.lr*(self.y - self.output)* sigmoidD(self.output)),self.layerI.T)
-		
-		self.errorI=updateI
-		self.errorO=updateO
-	
-		self.weightsI += updateI
-		self.weightsO += updateO
-	
-	def train(self):
-		hidd = np.dot(self.input,self.weightsI)
-		#hidd += self.bias_h
-		hidd = sigmoid(hidd)
-		self.output =np.dot(hidd,self.weightsO)#+self.bias_o
-		self.output = sigmoid(self.output)
-		#output error
-		o_error = self.y - self.output
-		gradients = np.dot(o_error*sigmoidD(self.output),self.lr)
-		weight_ho_deltas=np.dot(hidd.T,gradients)
-		#adjust out weights
-		self.weightsO += weight_ho_deltas
-		#self.bias_o += gradients
-		#hidden layer error
-		hidden_errors =np.dot(self.weightsO.T,o_error)
-		hidden_gradient = np.dot(np.dot(sigmoidD(hidd),hidden_errors),self.lr)
-		weight_ih_deltas = np.dot(hidden_gradient,self.input.T)
-		self.weightsI += weight_ih_deltas + hidden_gradient
-		
-
+		out_err = self.y-self.output
+		gradiente_o = (sigmoidD(self.output)*out_err)*self.lr
+		delta_ho = np.dot(gradiente_o,self.hidden.T)
+		self.weightsO+=delta_ho
+		self.bias_o+=gradiente_o
+		gradiente_h = sigmoidD(self.hidden)*np.dot(self.weightsO.T,out_err)*self.lr
+		delta_ih = np.dot(gradiente_h , self.input.T)
+		self.weightsI += delta_ih
+		self.bias_h += gradiente_h
 
 	def trainOnce(self,input_,output_):
 		self.y = output_		
@@ -91,31 +71,26 @@ class NeuralNet:
 		self.ff()
 		self.backprop()
 
-	def trainLoop(self,input_,output_,cycle):
-		#check dimens.
-		if (input_.shape[1]==self.iS and output_.shape[1]==self.oS):
-			self.y = output_		
-			self.input = input_
-			for i in range(cycle):
-				#train
-				self.ff()
-				self.backprop()
-				#data vis. array
-				self.plotPointsX.append(i)
-				self.plotPointsY1.append(np.sum(self.errorI))
-				self.plotPointsY2.append(np.sum(self.errorO))
-		else: 
-			print("WRONG IO SIZES!")
-			print("input:",input_.shape[1]==self.iS)
-			print("output",output_.shape[1]==self.oS)
-	
 	def answer(self,input_):
 		self.input=input_
 		self.ff()
-		print(self.output)
-		return self.output
+		#print(np.round(self.output, 1))
+		return np.round(self.output, 3)
 	
 	def plotError(self):
 		plt.plot(self.plotPointsX[10:],self.plotPointsY1[10:],c='red')
 		plt.plot(self.plotPointsX[10:],self.plotPointsY2[10:],c='blue')
 		plt.show()
+	
+	def export(self):
+		np.save("dataset/Win", self.weightsI)
+		np.save("dataset/Wo", self.weightsO)
+		np.save("dataset/biasH", self.bias_h)
+		np.save("dataset/biasO", self.bias_o)
+		print("EXPORTED")
+	def importPar(self):
+		self.weightsI=np.load("dataset/Win.npy")
+		self.weightsO=np.load("dataset/Wo.npy")
+		self.bias_h=np.load("dataset/biasH.npy")
+		self.bias_o=np.load("dataset/biasO.npy")
+	
