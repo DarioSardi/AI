@@ -1,0 +1,87 @@
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{parskip} %dannati indent
+\lstset{
+    numbers=left,
+    breaklines=true,
+    tabsize=2,
+    basicstyle=\ttfamily,
+}
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE Università di Bergamo}\\[1.5cm] % Name of your university/college
+\textsc{\Large Relazione progetto}\\[0.5cm] % Major heading such as course name
+\textsc{\large Artificial intelligence}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Reti neurali in python}\\[0.3cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Autore:}\\
+Dario \textsc{Sardi} % Your name
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Supervisore:} \\
+Francesco \textsc{Trovò} % Supervisor's Name
+\end{flushright}
+\end{minipage}\\[2cm]
+{\large 22 Aprile 2019}\\[2cm] % Date, change the \today to a set date if you want to be precise
+\includegraphics[scale=0.5]{logo.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+%#######################################################################
+\begin{abstract}
+L'obiettivo del progetto è quello di creare da zero una rete neurale in python senza sfruttare librerie gia esistenti.
+\\Si è creato dapprima un percettrone e successivamente una rete neurale con un solo hidden layer.
+\end{abstract}
+\section{Percettrone}
+Per iniziare e prender pratica con eventuali librerie matematiche è stato creato un percettrone, un neurone in grado di compiere semplici scelte binarie.
+In quanto classificatore lineare il dataset per il percettrone consiste in una nuvola di punti posizionati randomicamente e pre-classificati in due categorie in base a una funzione lineare stabilita.
+\begin{lstlisting}
+def function(x):
+	m=-1/3
+	c=0.5
+	return m*x+c
+
+def genFunction(x,y):
+	if y>function(x): return 1
+	else: return -1
+
+
+
+class point:
+    def __init__(self,x,y,b):
+		self.pos=[x,y,b]
+		self.group=genFunction(x,y)
+
+\end{lstlisting}
+In questo modo inizializzando un punto con posizione randomica, la sua appartenenza alle classi \{1,-1\} viene determinata dalla sua posizione relativa alla funzione lineare.
+
+\end{document}

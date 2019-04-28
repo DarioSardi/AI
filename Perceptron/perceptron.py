@@ -1,3 +1,4 @@
+import numpy as np 
 def act(x):
     if (x > 0):
         return 1
