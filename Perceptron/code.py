@@ -6,8 +6,8 @@
 import matplotlib.pyplot as plt
 from random import *
 import numpy as np
-import perceptron
-perc = perceptron.Perceptron(3)
+import Perceptron
+perc = Perceptron.Perceptron(3)
 
 RANGE = 1
 
@@ -39,15 +39,17 @@ def printPoints(pointsA):
             plt.scatter(p.pos[0], p.pos[1], c='black', s=100)
 
 
-def trainToPop(populationG, pa, number):
+def trainCycle(populationG, pa, number):
     for i in range(number):
-        for dot in populationG:
+        for i in range(50):
+            dot=choice(population)
             pa.train(dot.pos, dot.group)
 
         # print(pa.weights)
 # POPULATE
 population = [point(np.random.uniform(-RANGE, RANGE),
                     np.random.uniform(-RANGE, RANGE), 1) for i in range(100)]
+
 # TRAINING
 
 
@@ -61,12 +63,13 @@ def printGuess(populationG, perc_):
             plt.scatter(p.pos[0], p.pos[1], c='r', s=20)
     x = np.linspace(-RANGE, RANGE, 100)
     plt.plot(x, -(perc_.weights[0]/perc_.weights[1])
-             * x-(perc_.weights[2]/perc_.weights[1]))
+             * x-(perc_.weights[2]/perc_.weights[1]),label="guessed func.")
+    plt.legend()
     plt.show()
 
-
-printGuess(population, perc)
-trainToPop(population, perc, 5)
 x = np.linspace(-RANGE, RANGE, 100)
-plt.plot(x, function(x), c='red')
+plt.plot(x, function(x), c='red',label="target func.")
+printGuess(population, perc)
+trainCycle(population, perc, 5)
+plt.plot(x, function(x), c='red',label="target func.")
 printGuess(population, perc)

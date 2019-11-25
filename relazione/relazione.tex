@@ -3,16 +3,24 @@
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
-\usepackage[colorinlistoftodos]{todonotes}
 \usepackage{listings}
 \usepackage{caption}
 \usepackage{parskip} %dannati indent
+\usepackage[dvipsnames]{xcolor}
+
+
 \lstset{
-    numbers=left,
-    breaklines=true,
-    tabsize=2,
-    basicstyle=\ttfamily,
+    frame=tb, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{green}, % comment color
+	keywordstyle=\color{blue}, % keyword color
+	escapeinside={<@}{@>},
+	backgroundcolor=\color{black!10},
+	stringstyle=\color{red} % string color
 }
+
 
 \begin{document}
 
@@ -61,10 +69,11 @@ Francesco \textsc{Trovò} % Supervisor's Name
 L'obiettivo del progetto è quello di creare da zero una rete neurale in python senza sfruttare librerie gia esistenti.
 \\Si è creato dapprima un percettrone e successivamente una rete neurale con un solo hidden layer.
 \end{abstract}
+%#######################################################################
 \section{Percettrone}
 Per iniziare e prender pratica con eventuali librerie matematiche è stato creato un percettrone, un neurone in grado di compiere semplici scelte binarie.
 In quanto classificatore lineare il dataset per il percettrone consiste in una nuvola di punti posizionati randomicamente e pre-classificati in due categorie in base a una funzione lineare stabilita.
-\begin{lstlisting}
+\begin{lstlisting}[language=Python]
 def function(x):
 	m=-1/3
 	c=0.5
@@ -83,5 +92,48 @@ class point:
 
 \end{lstlisting}
 In questo modo inizializzando un punto con posizione randomica, la sua appartenenza alle classi \{1,-1\} viene determinata dalla sua posizione relativa alla funzione lineare.
+\newpage
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=10 cm]{Perc_before.png}
+	\caption{classificazione prima del training}
+	\label{fig:percBefore}
+\end{figure}
+Nella rappresentazione grafica (figura \ref{fig:percBefore} ) le due classi son rappresentate con quadrati e cerchi colorati di rosso o verde se sono classificati rispettivamnente in modo corretto o errato.
+La funzione effettiva di classificazione è la retta di colore rosso, in blu è presente quella stimata (inizialmente con pesi random).\\
+Il programma prosegue con dei cicli di training.
+\begin{lstlisting}[language=Python]
+	trainCycle(population, perc, <@\textcolor{magenta}{5}@> )
+\end{lstlisting}
+Per questo esempio il percettrone viene sottoposto a {\color{magenta}5} cicli di training.
+\begin{lstlisting}[language=Python]
+	def <@\color{OliveGreen}{TrainCycle}@>(populationG, pa, number):
+		for i in range(number):
+			for i in range(50):
+				dot=choice(population)
+				pa.train(dot.pos, dot.group)
+\end{lstlisting}
+La funzione {\color{OliveGreen}{TrainCycle}} seleziona 50 elementi randomici (funzione choice in python estrae casualmente da una collezione ) su 100 e li usa come train set.
+\newpage
+\begin{lstlisting}[language=Python]
+    def train(self,inputs,target):
+        guessed = self.guess(inputs)
+        error = target-guessed
+        for i in range(0,len(self.weights)):
+			<@\textcolor{orange}{self.weights[i] += error*inputs[i]*self.lr}@>
+\end{lstlisting}
+La funzione di train del percettrone rivaluta i propri pesi secondo la formula:
 
+$$\color{orange}\underline{w}=\underline{w}+\underline{err}*\underline{input}*learnRate$$
+
+L'output ottenuto dopo i cicli di training mostra una classificazione corretta.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=10 cm]{Perc_after.png}
+	\caption{classificazione dopo il training}
+	\label{fig:percBefore}
+\end{figure}
+\newpage
+%#######################################################################
+\section{Doodle classifier}
 \end{document}
