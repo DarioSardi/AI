@@ -80,6 +80,8 @@ INPUT C:\Program Files\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg
 INPUT C:\Program Files\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg
 INPUT C:\Program Files\MiKTeX 2.9\tex\latex\graphics\dvipsnam.def
 INPUT C:\Program Files\MiKTeX 2.9\tex\latex\graphics\dvipsnam.def
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\courier.sty
+INPUT C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\courier.sty
 INPUT c:\Users\skate\git\AI\relazione\relazione.aux
 INPUT c:\Users\skate\git\AI\relazione\relazione.aux
 OUTPUT c:\Users\skate\git\AI\relazione\relazione.aux
@@ -129,22 +131,32 @@ INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmr10.tfm
 INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmbx10.tfm
 INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmr17.tfm
 INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmbx12.tfm
-INPUT C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
-INPUT C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
+INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
 INPUT C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd
 INPUT C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd
-INPUT C:\Program Files\MiKTeX 2.9\tex\latex\base\omlcmr.fd
-INPUT C:\Program Files\MiKTeX 2.9\tex\latex\base\omlcmr.fd
 INPUT c:\Users\skate\git\AI\relazione\Perc_before.png
 INPUT c:\Users\skate\git\AI\relazione\Perc_before.png
 INPUT c:\Users\skate\git\AI\relazione\Perc_before.png
 INPUT c:\Users\skate\git\AI\relazione\Perc_before.png
 INPUT c:\Users\skate\git\AI\relazione\Perc_before.png
+INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmbx12.tfm
 INPUT c:\Users\skate\git\AI\relazione\Perc_after.png
 INPUT c:\Users\skate\git\AI\relazione\Perc_after.png
 INPUT c:\Users\skate\git\AI\relazione\Perc_after.png
 INPUT c:\Users\skate\git\AI\relazione\Perc_after.png
 INPUT c:\Users\skate\git\AI\relazione\Perc_after.png
+INPUT C:\Program Files\MiKTeX 2.9\fonts\tfm\public\cm\cmbx12.tfm
+INPUT c:\Users\skate\git\AI\relazione\resources\hidden.png
+INPUT c:\Users\skate\git\AI\relazione\resources\hidden.png
+INPUT c:\Users\skate\git\AI\relazione\resources\hidden.png
+INPUT c:\Users\skate\git\AI\relazione\resources\hidden.png
+INPUT c:\Users\skate\git\AI\relazione\resources\hidden.png
+INPUT c:\Users\skate\git\AI\relazione\resources\output.png
+INPUT c:\Users\skate\git\AI\relazione\resources\output.png
+INPUT c:\Users\skate\git\AI\relazione\resources\output.png
+INPUT c:\Users\skate\git\AI\relazione\resources\output.png
+INPUT c:\Users\skate\git\AI\relazione\resources\output.png
 INPUT c:\Users\skate\git\AI\relazione\relazione.aux
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx10.pfb
@@ -152,6 +164,8 @@ INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx12.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmbx12.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmcsc10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmcsc10.pfb
+INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmmi10.pfb
+INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmmi10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmr10.pfb
@@ -162,3 +176,5 @@ INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmti12.pfb
 INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\cm\cmti12.pfb
+INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\latxfont\lcircle1.pfb
+INPUT C:\Program Files\MiKTeX 2.9\fonts\type1\public\amsfonts\latxfont\lcircle1.pfb

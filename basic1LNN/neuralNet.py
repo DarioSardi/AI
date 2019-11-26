@@ -29,10 +29,11 @@ class NeuralNet:
 		self.weightsI = np.random.random(( hidden_size,input_size))*2-1		# better init?
 		# output weights matrice 4 x 1
 		self.weightsO = np.random.random((out_size,hidden_size))*2-1		# better init?
-		# inizializzo array output
+		#inizializzo bias tra -1 e 1. random va da 0 a 1
 		self.bias_h =np.random.random((hidden_size,1))*2-1
 		self.bias_o = np.random.random((out_size,1))*2-1
 		self.lr = 0.1
+		# inizializzo array output
 		self.output = np.zeros(out_size)
 		self.plotPointsX = []
 		self.plotPointsY1 = []
