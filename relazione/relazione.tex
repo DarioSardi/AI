@@ -7,7 +7,7 @@
 \usepackage{caption}
 \usepackage{parskip} %dannati indent
 \usepackage[dvipsnames]{xcolor}
-\usepackage{courier}
+\usepackage[scaled=1.04]{couriers}
 
 
 \lstdefinelanguage{myPython}{
@@ -17,21 +17,23 @@
     showstringspaces=false, % don't mark spaces in strings
 	numbers=left, % display line numbers on the left
 	backgroundcolor=\color{black!10},
-	basicstyle=\footnotesize\fontfamily{fvm}\selectfont,
+	%basicstyle=\footnotesize\fontfamily{fvm}\selectfont,
 	breaklines=true,
 	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 	escapeinside={<?}{?>},
+	morecomment  = [f]{\#},
+	commentstyle = \bf\color{red}\!,
 	morekeywords = [1]{def, int, float, long, complex, str, unicode, list, tuple, bytearray, buffer},
-	keywordstyle = [1]\color{Aquamarine},
-	morekeywords = [2]{import,as,return,for,in},
-	keywordstyle = [2]\color{OrangeRed},
-	morekeywords = [3]{self},
+	keywordstyle = [1]\color{Aquamarine}\bfseries,
+	morekeywords = [2]{import,as,return,for,in,class,if,else},
+	keywordstyle = [2]\color{OrangeRed}\bfseries,
+	morekeywords = [3]{self,TRAIN},
 	keywordstyle = [3]\color{orange},
 	morekeywords = [4]{=,+,-,>,<,*,.},
 	keywordstyle = [4]\color{black},
 	alsoletter={<>=-+*},
-	procnamekeys={def},
-	procnamestyle={\color{YellowGreen}},
+	procnamekeys={def,class},
+	procnamestyle=\color{ForestGreen}\bfseries,
 }
 % \lstset{
 % 	keywordstyle=\color{RubineRed}\bfseries, % keyword color
@@ -94,19 +96,19 @@ L'obiettivo del progetto è quello di creare da zero una rete neurale in python 
 Per iniziare e prender pratica con eventuali librerie matematiche è stato creato un percettrone, un neurone in grado di compiere semplici scelte binarie.
 In quanto classificatore lineare il dataset per il percettrone consiste in una nuvola di punti posizionati randomicamente e pre-classificati in due categorie in base a una funzione lineare stabilita.
 \begin{lstlisting}[language=myPython]
-def function(x):
+def function (x):
 	m=-1/3
 	c=0.5
 	return m*x+c
 
-def genFunction(x,y):
+def genFunction (x,y):
 	if y>function(x): return 1
 	else: return -1
 
 
 
 class point:
-    def __init__(self,x,y,b):
+    def __init__ (self,x,y,b):
 		self.pos=[x,y,b]
 		self.group=genFunction(x,y)
 
@@ -127,7 +129,7 @@ Il programma prosegue con dei cicli di training.
 \end{lstlisting}
 Per questo esempio il percettrone viene sottoposto a {\color{magenta}5} cicli di training.
 \begin{lstlisting}[language=myPython]
- def <?\color{OliveGreen}{\textbf{TrainCycle}}?>(populationG, pa, number):
+ def <?\color{OliveGreen}{\textbf{TrainCycle}}?> (populationG, pa, number):
 	for i in range(number):
 		for i in range(50):
 			dot = choice(population)
@@ -136,7 +138,7 @@ Per questo esempio il percettrone viene sottoposto a {\color{magenta}5} cicli di
 La funzione {\color{OliveGreen}{\textbf{TrainCycle}}} seleziona 50 elementi randomici (funzione choice in python estrae casualmente da una collezione ) su 100 e li usa come train set.
 \newpage
 \begin{lstlisting}[language=myPython]
- def train(self,inputs,target):
+ def train (self,inputs,target):
 	guessed = self.guess(inputs)
 	error = target-guessed
 	for i in range(0,len(self.weights)):
@@ -156,15 +158,15 @@ L'output ottenuto dopo i cicli di training mostra una classificazione corretta.
 \newpage
 %#######################################################################
 \section{Doodle classifier}
-Lo scopo del progetto è stato ottenere un classificatore in grado di distinguere con una buona precisione a cosa somigliasse di più un disegno rispetto a altri riferimenti passati in precedenza.
+Lo scopo del progetto è stato ottenere un classificatore in grado di distinguere con una buona precisione a cosa somigliasse di più un disegno rispetto a altri riferimenti passati in precedenza.\\
+Nel caso specifico sono stati utilizzati tre dataset contenenti disegni di nuvole,uccelli e della torre eiffel.
 \subsection{Neural network}
-Il primo passo è stato creare una classe per la rete neurale dotata di un solo hidden layer. 
+Il primo passo è stato creare una classe per la rete neurale dotata di un solo hidden layer (basic1NN/neuralNet.py). 
 \begin{lstlisting}[language=myPython]
- def __init__(self, input_size,hidden_size,out_size):
+ def __init__ (self, input_size,hidden_size,out_size):
 	self.input = []
 	self.iS = int(input_size)
-	self.oS = int(out_size)
-
+	self.oS = int(out_size)	
 	self.weightsI = np.random.random(( hidden_size,input_size))*2-1
 	self.weightsO = np.random.random((out_size,hidden_size))*2-1
 	self.bias_h = np.random.random((hidden_size,1))*2-1
@@ -172,6 +174,15 @@ Il primo passo è stato creare una classe per la rete neurale dotata di un solo 
 	self.lr = 0.1
 	self.output = np.zeros(out_size)
 \end{lstlisting}
+\newpage
+Sono state implementate successivamente le funzioni di feed forward e di backward propagation
+\begin{lstlisting}[language=myPython]
+# funzione di feedforward
+def ff(self): 
+	self.hidden = sigmoid(np.dot(self.weightsI,self.input)+self.bias_h)
+	self.output = sigmoid(np.dot(self.weightsO,self.hidden)+self.bias_o)
+\end{lstlisting}
+Le operazioni effettuate sono rappresentati nella figura \ref{fig:hidden} e \ref{fig:output} escludendo la sigmoide usata come funzione di attivazione
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=10 cm]{resources/hidden.png}
@@ -184,6 +195,80 @@ Il primo passo è stato creare una classe per la rete neurale dotata di un solo 
 	\caption{rappresentazione matriciale degli argomenti di classe 2}
 	\label{fig:output}
 \end{figure}
-
-
+\newpage
+\begin{lstlisting}[language=myPython]
+# funzione di backward propagation
+def backprop(self):
+	out_err = self.y-self.output
+	gradiente_o = (sigmoidD(self.output)*out_err)*self.lr
+	delta_ho = np.dot(gradiente_o,self.hidden.T)
+	self.weightsO+=delta_ho
+	self.bias_o+=gradiente_o
+	gradiente_h = sigmoidD(self.hidden)*np.dot(self.weightsO.T,out_err)*self.lr
+	delta_ih = np.dot(gradiente_h , self.input.T)
+	self.weightsI += delta_ih
+	self.bias_h += gradiente_h
+\end{lstlisting}
+La funzione di backward è piuttosto autoesplicativa, considerando sigmoidD(x) la derivata della sigmoide.\\
+Per velocizzare l'esecuzione del codice sono state inserite delle funzioni per importare/esportare ( importPar(),export() ) i pesi in modo da non dover fare training ogni volta prima di eseguire il codice.
+\newpage
+\subsection{Main file}
+Nel file principale ( ./googleDoodle.py ) se la rete neurale non fosse gia pronta si puo impostare la variabile TRAIN per inizializzare il dataset e eseguire le funzioni di train.
+\subsubsection{Training}
+Viene effettuato il training su 3 differenti dataset di disegni. Le immagini sono 28x28 pixel e sono salvati in file di numpy (libreria di python).
+\begin{lstlisting}[language=myPython]
+if TRAIN:
+	clouds=np.load("dataset/cloud.npy")
+	...
+	splitClouds=int(120265*0.75)
+	TrainClouds,TestClouds = np.split(clouds,[splitClouds])
+	...
+\end{lstlisting}
+Il dataset delle nuvole ad esempio viene caricato e diviso al 75\% in due per il training e testing rispettivamente.
+\begin{lstlisting}[language=myPython]
+import basic1LNN.neuralNet as nn
+oracle = nn.NeuralNet(784,64,3)
+\end{lstlisting}
+Viene creata una rete neurale con un input di 784 (pixel totali dell'immagine),64 nodi nell'hidden layer e un output di 3 ( per i 3 dataset utilizzati).
+\newpage
+\begin{lstlisting}[language=myPython]
+if TRAIN:
+	trainingSet = []
+	print("generating training set")
+	for i in range(splitBirds-1):
+		x=np.reshape(TrainBirds[i]/255.0,(784,1))
+		y=np.reshape(np.array([1,0,0]),(3,1))
+		trainingSet.append([x,y])
+	for i in range(splitClouds-1):
+		x=np.reshape(TrainClouds[i]/255.0,(784,1))
+		y=np.reshape(np.array([0,1,0]),(3,1))
+		trainingSet.append([x,y])
+	for i in range(splitEiffel-1):
+		x=np.reshape(TrainEiffel[i]/255.0,(784,1))
+		y=np.reshape(np.array([0,0,1]),(3,1))
+		trainingSet.append([x,y])
+	r = random.SystemRandom()
+	r.shuffle(trainingSet)
+	for el in trainingSet:
+		oracle.trainOnce(el[0],el[1])
+	oracle.export()
+else:
+	oracle.importPar()
+\end{lstlisting}
+Le immagini del train set vengono quindi prese singolarmente, convertite in vettori con valori da 0 a 1, associati alla terna corrispondente all'immagine (0,1,0 per i disegni di nuvole ) e inseriti in un database unico che verrà poi mescolato per avere un training uniforme.
+\newpage
+\subsubsection{Guessing}
+Il programma prende in input il file myInput.png posizionato nella stessa cartella di \textbf{googleDoodle.py}, lo converte in un formato compatibile e tramite il metodo answer() della classe NeuralNetwork ottiene la classificazione.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=15 cm]{output.png}
+	\caption{output post esecuzione}
+	\label{fig:output}
+\end{figure}
+\newpage
+\begin{thebibliography}{9}
+\bibitem{googleDoodleProject}
+Dataset di google:\\
+https://github.com/googlecreativelab/quickdraw-dataset 
+\end{thebibliography}
 \end{document}

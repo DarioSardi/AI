@@ -5,20 +5,23 @@ import matplotlib.gridspec as gridspec
 from PIL import Image
 import random
 import basic1LNN.neuralNet  as nn
+TRAIN=False
+TEST=False
 
+
+if TRAIN:
 #########################  IMPORT SETS  #######################################
-clouds=np.load("dataset/cloud.npy") #28x28 img
-birds=np.load("dataset/bird.npy") #28x28 img
-eiffel=np.load("dataset/eiffel.npy") #28x28 img
-hotdog=np.load("dataset/hot-dog.npy") #28x28 img
+	clouds=np.load("dataset/cloud.npy") #28x28 img
+	birds=np.load("dataset/bird.npy") #28x28 img
+	eiffel=np.load("dataset/eiffel.npy") #28x28 img
 
-########################  INIT THE SETS  ######################################
-splitClouds=int(120265*0.75)#random.randint(0,120265)
-TrainClouds,TestClouds = np.split(clouds,[splitClouds])
-splitBirds=int(133572*0.75)#random.randint(0,133572)
-TrainBirds,TestBirds = np.split(birds,[splitBirds])
-splitEiffel=int(134801*0.75)#random.randint(0,134801)
-TrainEiffel,TestEiffel = np.split(eiffel,[splitEiffel])
+	########################  INIT THE SETS  ######################################
+	splitClouds=int(120265*0.75)#random.randint(0,120265)
+	TrainClouds,TestClouds = np.split(clouds,[splitClouds])
+	splitBirds=int(133572*0.75)#random.randint(0,133572)
+	TrainBirds,TestBirds = np.split(birds,[splitBirds])
+	splitEiffel=int(134801*0.75)#random.randint(0,134801)
+	TrainEiffel,TestEiffel = np.split(eiffel,[splitEiffel])
 ###############################################################################
 
 def plotSome(a,columns,rows):
@@ -41,8 +44,7 @@ def plot(img):
 #########################  NEURAL NET  #######################################
 import basic1LNN.neuralNet as nn
 oracle = nn.NeuralNet(784,64,3)
-train=False
-if train:
+if TRAIN:
         trainingSet= []
         print("generating training set")
         for i in range(splitBirds-1):
@@ -66,8 +68,7 @@ if train:
 else:
         oracle.importPar()
 wrong=0
-test=False
-if test:
+if TEST:
         for i in range(TestBirds.shape[0]):
                 ans=oracle.answer(np.reshape(TestBirds[i]/255.0,(784,1)))
                 if max(ans[0],ans[1],ans[2])==ans[0]:
@@ -79,16 +80,23 @@ if test:
 
 #MYINPUT
 img = np.array(Image.open("myInput.png").convert('L'))
-img = 255-img
 plt.imshow(img,cmap='gray')
-plt.show()
+legend="1,0,0=uccello\n0,1,0=nuvola\n0,0,1=torre eiffel"
+plt.text(33 ,3,legend,horizontalalignment='center',verticalalignment='center')
 #print(img)
 ans=oracle.answer(np.reshape(img/255.0,(784,1)))
 def whatIs(a):
+        global plt
+        ansString="["+str(a[0][0])+","+str(a[1][0])+","+str(a[2][0])+"]"
+        plt.text(15, 2.5, ansString, horizontalalignment='center')
         if (a[0]>a[1] and a[0]>a[2]):
-                print("un uccello?!")
+                plt.text(15, 5, 'è un uccello?', horizontalalignment='center')
+                #print("un uccello?!")
         elif (a[1]>a[0] and a[1]>a[2]):
-                print("una nuvola?!")
+                plt.text(15,5,'è una nuvola?',horizontalalignment='center')
+                #print("una nuvola?!")
         else:
-                print("la torre eiffel?!")
+                plt.text(15, 5, 'è la torre eiffel?', horizontalalignment='center')
+                #print("la torre eiffel?!")
 whatIs(ans)
+plt.show()
