@@ -161,7 +161,7 @@ L'output ottenuto dopo i cicli di training mostra una classificazione corretta.
 Lo scopo del progetto è stato ottenere un classificatore in grado di distinguere con una buona precisione a cosa somigliasse di più un disegno rispetto a altri riferimenti passati in precedenza.\\
 Nel caso specifico sono stati utilizzati tre dataset contenenti disegni di nuvole,uccelli e della torre eiffel.
 \subsection{Neural network}
-Il primo passo è stato creare una classe per la rete neurale dotata di un solo hidden layer (basic1NN/neuralNet.py). 
+Il primo passo è stato creare una classe per la rete neurale dotata di un solo hidden layer (\textit{basic1NN/neuralNet.py}). 
 \begin{lstlisting}[language=myPython]
  def __init__ (self, input_size,hidden_size,out_size):
 	self.input = []
@@ -186,13 +186,13 @@ Le operazioni effettuate sono rappresentati nella figura \ref{fig:hidden} e \ref
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=10 cm]{resources/hidden.png}
-	\caption{rappresentazione matriciale degli argomenti di classe 1}
+	\caption{rappresentazione matriciale degli argomenti della classe usati nel calcolo dei valori dell'hidden layer}
 	\label{fig:hidden}
 \end{figure}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=10 cm]{resources/output.png}
-	\caption{rappresentazione matriciale degli argomenti di classe 2}
+	\caption{rappresentazione matriciale degli argomenti della classe usati nel calcolo dell'output}
 	\label{fig:output}
 \end{figure}
 \newpage
@@ -209,11 +209,20 @@ def backprop(self):
 	self.weightsI += delta_ih
 	self.bias_h += gradiente_h
 \end{lstlisting}
-La funzione di backward è piuttosto autoesplicativa, considerando sigmoidD(x) la derivata della sigmoide.\\
-Per velocizzare l'esecuzione del codice sono state inserite delle funzioni per importare/esportare ( importPar(),export() ) i pesi in modo da non dover fare training ogni volta prima di eseguire il codice.
+La funzione di backward utilizza la formula:
+\[out\_err=target-output\]
+\[ \nabla_o=({\sigma'(output)}*(out\_err))*learningRate \]
+\[ \Delta_o=\nabla_o * hidden^T \]
+\[weightsO= weightsO+\Delta_o\]
+\[bias\_o=bias\_o+\nabla_o\]
+\[ \nabla_h=({\sigma'(hidden)}*(weightsO^T*out\_err))*learningRate \]
+\[\Delta_i=\nabla_h*input^T\]
+\[weightsI=weightsI+\Delta_i\]
+\[bias\_h=bias\_h+\nabla_h\]
+Per velocizzare l'esecuzione del codice sono state inserite delle funzioni per importare/esportare ( importPar(),export() ) i pesi (weightsI,weightsO,bias\_h,bias\_o)in modo da non dover fare training ogni volta prima di eseguire il codice.
 \newpage
 \subsection{Main file}
-Nel file principale ( ./googleDoodle.py ) se la rete neurale non fosse gia pronta si puo impostare la variabile TRAIN per inizializzare il dataset e eseguire le funzioni di train.
+Nel file principale ( \textit{./googleDoodle.py} ) se la rete neurale non fosse gia pronta si puo impostare la variabile TRAIN per inizializzare il dataset e eseguire le funzioni di train.
 \subsubsection{Training}
 Viene effettuato il training su 3 differenti dataset di disegni. Le immagini sono 28x28 pixel e sono salvati in file di numpy (libreria di python).
 \begin{lstlisting}[language=myPython]
@@ -224,7 +233,7 @@ if TRAIN:
 	TrainClouds,TestClouds = np.split(clouds,[splitClouds])
 	...
 \end{lstlisting}
-Il dataset delle nuvole ad esempio viene caricato e diviso al 75\% in due per il training e testing rispettivamente.
+Il dataset delle nuvole ad esempio viene caricato e diviso al 75\% (120265 è il numero totale di samples nel dataset delle nuvole) in due per il training e testing rispettivamente.
 \begin{lstlisting}[language=myPython]
 import basic1LNN.neuralNet as nn
 oracle = nn.NeuralNet(784,64,3)
@@ -255,15 +264,15 @@ if TRAIN:
 else:
 	oracle.importPar()
 \end{lstlisting}
-Le immagini del train set vengono quindi prese singolarmente, convertite in vettori con valori da 0 a 1, associati alla terna corrispondente all'immagine (0,1,0 per i disegni di nuvole ) e inseriti in un database unico che verrà poi mescolato per avere un training uniforme.
+Le immagini del train set vengono quindi prese singolarmente, convertite in vettori con valori da 0 a 1, associati alla terna corrispondente all'immagine (e.g. 0,1,0 per i disegni di nuvole) e inseriti in un database unico che verrà poi mescolato per avere un training uniforme.
 \newpage
 \subsubsection{Guessing}
-Il programma prende in input il file myInput.png posizionato nella stessa cartella di \textbf{googleDoodle.py}, lo converte in un formato compatibile e tramite il metodo answer() della classe NeuralNetwork ottiene la classificazione.
+Il programma prende in input il file myInput.png posizionato nella stessa cartella di \textit{googleDoodle.py}, lo converte in un formato compatibile e tramite il metodo answer() della classe NeuralNetwork ottiene la classificazione.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=15 cm]{output.png}
 	\caption{output post esecuzione}
-	\label{fig:output}
+	\label{fig:procOutput}
 \end{figure}
 \newpage
 \begin{thebibliography}{9}

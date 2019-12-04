@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.11.20)  4 DEC 2019 14:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2019.11.20)  4 DEC 2019 16:24
 entering extended mode
 **c:/Users/skate/git/AI/relazione/relazione.tex
 (c:/Users/skate/git/AI/relazione/relazione.tex
@@ -207,11 +207,7 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 )) ("C:\Program Files\MiKTeX 2.9\tex/latex/courier-scaled\couriers.sty"
 Package: couriers 2004/07/10 Scaled Courier (HS) 
-) (c:/Users\skate\git\AI\relazione\relazione.aux
-
-LaTeX Warning: Label `fig:output' multiply defined.
-
-)
+) (c:/Users\skate\git\AI\relazione\relazione.aux)
 \openout1 = `relazione.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
@@ -312,48 +308,39 @@ File: resources/output.png Graphic file (type png)
 Package pdftex.def Info: resources/output.png  used on input line 194.
 (pdftex.def)             Requested size: 284.52756pt x 115.02782pt.
  [5 <c:/Users/skate/git/AI/relazione/resources/hidden.png> <c:/Users/skate/git/AI/relazione/resources/output.png>]
-Overfull \hbox (7.07645pt too wide) in paragraph at lines 212--214
-\OT1/cmr/m/n/12 La fun-zione di back-ward e pi-ut-tosto au-toe-s-plica-tiva, con-siderando sig-moidD(x)
+Overfull \hbox (49.1846pt too wide) in paragraph at lines 221--223
+\OT1/cmr/m/n/12 im-portare/e-s-portare ( im-port-Par(),export() ) i pesi (weightsI,weightsO,bias[]h,bias[]o)in
  []
 
 [6]
-Overfull \hbox (10.14445pt too wide) in paragraph at lines 232--233
+Overfull \hbox (10.14445pt too wide) in paragraph at lines 241--242
 \OT1/cmr/m/n/12 Viene cre-ata una rete neu-rale con un in-put di 784 (pixel to-tali dell'immagine),64
  []
 
 [7] [8]
-<output.png, id=50, 507.3354pt x 346.896pt>
+<output.png, id=52, 507.3354pt x 346.896pt>
 File: output.png Graphic file (type png)
 <use output.png>
-Package pdftex.def Info: output.png  used on input line 264.
+Package pdftex.def Info: output.png  used on input line 273.
 (pdftex.def)             Requested size: 426.79134pt x 291.83527pt.
 
-Overfull \hbox (36.79134pt too wide) in paragraph at lines 264--265
+Overfull \hbox (36.79134pt too wide) in paragraph at lines 273--274
  [][] 
  []
 
-
-Overfull \hbox (1.95248pt too wide) in paragraph at lines 261--268
-\OT1/cmr/m/n/12 cartella di \OT1/cmr/bx/n/12 google-Doo-dle.py\OT1/cmr/m/n/12 , lo con-verte in un for-mato com-pat-i-bile e tramite
- []
-
-[9 <c:/Users/skate/git/AI/relazione/output.png>] [10] (c:/Users\skate\git\AI\relazione\relazione.aux)
-
-LaTeX Warning: There were multiply-defined labels.
-
- ) 
+[9 <c:/Users/skate/git/AI/relazione/output.png>] [10] (c:/Users\skate\git\AI\relazione\relazione.aux) ) 
 Here is how much of TeX's memory you used:
- 7496 strings out of 492446
- 104193 string characters out of 3129617
- 264721 words of memory out of 3000000
- 11757 multiletter control sequences out of 15000+200000
- 11333 words of font info for 40 fonts, out of 3000000 for 9000
+ 7498 strings out of 492446
+ 104224 string characters out of 3129617
+ 264690 words of memory out of 3000000
+ 11759 multiletter control sequences out of 15000+200000
+ 11680 words of font info for 41 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  51i,7n,42p,859b,1427s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/latxfont/lcircle1.pfb>
-Output written on c:/Users\skate\git\AI\relazione\relazione.pdf (11 pages, 349445 bytes).
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/latxfont/lcircle1.pfb>
+Output written on c:/Users\skate\git\AI\relazione\relazione.pdf (11 pages, 370773 bytes).
 PDF statistics:
- 87 PDF objects out of 1000 (max. 8388607)
+ 95 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
