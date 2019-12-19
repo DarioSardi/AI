@@ -6,10 +6,10 @@ from PIL import Image
 import random
 import basic1LNN.neuralNet  as nn
 TRAIN=False
-TEST=False
+TEST=True
+PLOT=False
 
-
-if TRAIN:
+if TRAIN or TEST:
 #########################  IMPORT SETS  #######################################
 	clouds=np.load("dataset/cloud.npy") #28x28 img
 	birds=np.load("dataset/bird.npy") #28x28 img
@@ -43,41 +43,78 @@ def plot(img):
 
 #########################  NEURAL NET  #######################################
 import basic1LNN.neuralNet as nn
-oracle = nn.NeuralNet(784,64,3)
-if TRAIN:
-        trainingSet= []
-        print("generating training set")
-        for i in range(splitBirds-1):
-               x=np.reshape(TrainBirds[i]/255.0,(784,1))
-               y=np.reshape(np.array([1,0,0]),(3,1))
-               trainingSet.append([x,y])
-        for i in range(splitClouds-1):
-               x=np.reshape(TrainClouds[i]/255.0,(784,1))
-               y=np.reshape(np.array([0,1,0]),(3,1))
-               trainingSet.append([x,y])
-        for i in range(splitEiffel-1):
-               x=np.reshape(TrainEiffel[i]/255.0,(784,1))
-               y=np.reshape(np.array([0,0,1]),(3,1))
-               trainingSet.append([x,y])
-        r = random.SystemRandom()
-        r.shuffle(trainingSet)
-        print("let the training begin")
-        for el in trainingSet:
-                oracle.trainOnce(el[0],el[1])
-        oracle.export()
-else:
-        oracle.importPar()
-wrong=0
-if TEST:
-        for i in range(TestBirds.shape[0]):
-                ans=oracle.answer(np.reshape(TestBirds[i]/255.0,(784,1)))
-                if max(ans[0],ans[1],ans[2])==ans[0]:
-                        continue
-                else:
-                        #print(ans)
-                        wrong+=1
-        print(str(100*wrong/i)+" percento di errori su "+str(i)+" disegni")
+birdsE=[]
+cloudsE=[]
+eiffelE=[]
+yE=[]
+for i in range(1):
+        yE.append(i)
+        print(i)
+        oracle = nn.NeuralNet(784,64,3)
+        if TRAIN:
+                trainingSet= []
+                print("generating training set")
+                for i in range(splitBirds-1):
+                        x=np.reshape(TrainBirds[i]/255.0,(784,1))
+                        y=np.reshape(np.array([1,0,0]),(3,1))
+                        trainingSet.append([x,y])
+                for i in range(splitClouds-1):
+                        x=np.reshape(TrainClouds[i]/255.0,(784,1))
+                        y=np.reshape(np.array([0,1,0]),(3,1))
+                        trainingSet.append([x,y])
+                for i in range(splitEiffel-1):
+                        x=np.reshape(TrainEiffel[i]/255.0,(784,1))
+                        y=np.reshape(np.array([0,0,1]),(3,1))
+                        trainingSet.append([x,y])
+                r = random.SystemRandom()
+                r.shuffle(trainingSet)
+                print("let the training begin")
+                for el in trainingSet:
+                        oracle.trainOnce(el[0],el[1])
+                oracle.export()
+        else:
+                oracle.importPar()
+        wrong=0
 
+        if TEST:
+                for i in range(TestBirds.shape[0]):
+                        ans=oracle.answer(np.reshape(TestBirds[i]/255.0,(784,1)))
+                        if max(ans[0],ans[1],ans[2])==ans[0]:
+                                continue
+                        else:
+                                #print(ans)
+                                wrong+=1
+                birdsE.append(100*wrong/i)
+                print(str(int(100*wrong/i))+" percento di errori su "+str(i)+" uccelli")
+                wrong=0
+                for i in range(TestClouds.shape[0]):
+                        ans=oracle.answer(np.reshape(TestClouds[i]/255.0,(784,1)))
+                        if max(ans[0],ans[1],ans[2])==ans[1]:
+                                continue
+                        else:
+                                #print(ans)
+                                wrong+=1
+                cloudsE.append(100*wrong/i)
+                print(str(int(100*wrong/i))+" percento di errori su "+str(i)+" nuvole")
+                wrong=0
+                for i in range(TestEiffel.shape[0]):
+                        ans=oracle.answer(np.reshape(TestEiffel[i]/255.0,(784,1)))
+                        if max(ans[0],ans[1],ans[2])==ans[2]:
+                                continue
+                        else:
+                                #print(ans)
+                                wrong+=1
+                eiffelE.append(100*wrong/i)
+                print(str(int(100*wrong/i))+" percento di errori su "+str(i)+" eiffel")
+                wrong=0
+if PLOT:
+        plt.scatter(yE,birdsE,label='uccelli')
+        plt.scatter(yE,cloudsE,label='nuvole')
+        plt.scatter(yE,eiffelE,label='torre eiffel')
+        plt.ylabel("% errore")
+        plt.xlabel("test numero")
+        plt.legend()
+        plt.show()
 #MYINPUT
 img = np.array(Image.open("myInput.png").convert('L'))
 plt.imshow(img,cmap='gray')

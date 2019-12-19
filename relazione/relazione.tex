@@ -266,7 +266,42 @@ else:
 \end{lstlisting}
 Le immagini del train set vengono quindi prese singolarmente, convertite in vettori con valori da 0 a 1, associati alla terna corrispondente all'immagine (e.g. 0,1,0 per i disegni di nuvole) e inseriti in un database unico che verrà poi mescolato per avere un training uniforme.
 \newpage
-\subsubsection{Guessing}
+\subsubsection{Testing}
+Dopo la fase di training si puo valutare il rendimento della rete testandola sulla seconda parte dei dataset divisi in precedenza.
+\begin{lstlisting}[language=myPython]
+if TEST:
+	for i in range(TestBirds.shape[0]):
+			ans=oracle.answer(np.reshape(TestBirds[i]/255.0,(784,1)))
+			if max(ans[0],ans[1],ans[2])==ans[0]:
+					continue
+			else:
+					#print(ans)
+					wrong+=1
+	print(str(int(100*wrong/i))+" percento di errori su "+str(i)+" uccelli")
+	...
+	#ripetere su ogni dataset.
+\end{lstlisting}
+generando un output testuale
+\begin{verbatim}
+	3 percento di errori su 33392 uccelli
+	9 percento di errori su 30066 nuvole
+	3 percento di errori su 33700 eiffel
+\end{verbatim}
+ottenendo un come risultato un errore inferiore al 10\% su tutte le classi (tenendo conto che il database non risulta filtrato e dunque contiene immagini "rumorose").
+\newpage
+Nella figura \ref{fig:error} si puo notare come su 20 reti neurali sottoposte a training l'error rate non abbia mai superato il 10\%.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=15 cm]{errorRate2.png}
+	\caption{errori percentuali su 20 reti neurali}
+	\label{fig:error}
+\end{figure}
+
+
+
+
+\newpage
+\subsection{Guessing}
 Il programma prende in input il file myInput.png posizionato nella stessa cartella di \textit{googleDoodle.py}, lo converte in un formato compatibile e tramite il metodo answer() della classe NeuralNetwork ottiene la classificazione.
 \begin{figure}[h!]
 	\centering
